@@ -88,7 +88,7 @@ public class UsersServlet extends BaseServlet {
 				break;
 			case 2:
 				String piccode = (String) request.getSession().getAttribute("piccode");
-				String checkcode = request.getParameter("checkcode");
+				String checkcode = request.getParameter("regcheckcode");
 				checkcode = checkcode.toUpperCase();
 
 				if(checkcode.equals(piccode)){

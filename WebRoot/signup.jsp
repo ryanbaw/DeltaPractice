@@ -39,15 +39,16 @@ request.setAttribute("tomcatExamplesUrl", "/examples/");
             document.getElementById("imagecode").src="<%=request.getContextPath() %>/imageServlet?d="+time;
         }
 
-        var cflags = Array("0","0","0","0","0");
+        var cflags = Array("0","0","0","0","0","0");
         function checkall() {
             checkusername();
             checkpassword();
             checkcpassword();
             checkemail();
+            checkccode();
             checkBox();
             var i=0;
-            while (i<5) {
+            while (i<6) {
                 if (cflags[i]=="0") {
                     alert("你的用户信息不正确,请检查!");
                     alert(cflags);
@@ -55,7 +56,7 @@ request.setAttribute("tomcatExamplesUrl", "/examples/");
                     return false;
                 } else {
                     i++;
-                    if (i==5) {
+                    if (i==6) {
                         return true;
                     }
                 }
@@ -83,7 +84,7 @@ request.setAttribute("tomcatExamplesUrl", "/examples/");
                 return true;
             }
             function usermessage(id){
-                check_info.innerHTML = msg[id];
+                document.getElementById("check_info").innerHTML = msg[id];
             }
         }
         //检查登入密码;
@@ -91,7 +92,7 @@ request.setAttribute("tomcatExamplesUrl", "/examples/");
             var pwd = document.getElementById("regpassword").value;
 
             if (pwd.length<6||pwd.length>16){
-                pwd_info.innerHTML = "<font color=\"red\">密码格式不正确</font>";
+                document.getElementById("pwd_info").innerHTML = "<font color=\"red\">密码格式不正确</font>";
                 cflags[1]="0";
                 // alert(cflags[1]);
                 return false;
@@ -103,7 +104,7 @@ request.setAttribute("tomcatExamplesUrl", "/examples/");
         }
         //检查密码是否一致;
         function checkcpassword(){
-            var pwd2 = document.getElementById("cpassword").value;
+            var pwd2 = document.getElementById("regrepassword").value;
             if (pwd2==document.getElementById("regpassword").value) {
                 document.getElementById("pwdrepeat_info").innerHTML = "";
                 cflags[2]="1";
@@ -115,47 +116,26 @@ request.setAttribute("tomcatExamplesUrl", "/examples/");
                 return false;
             }
         }
-        //检查电话;
-        function checktelphone(){
-            var tel=document.getElementById("regtel").value;
-            var num1=/(^13[013456789]\d{8}$)/;
-            if (num1.test(tel)) {
-                if(tel.length!=11){
-                    alert("您输入的手机号码有误!!");
-                    document.getElementById("tel_info").innerHTML = "<font color=\"red\">您输入的手机号码有误,请重输</font>"
-                    cflags[4]="0";
-                    return false;
-                }else{
-                document.getElementById("tel_info").innerHTML = "";
-                cflags[4]="1";
-                return true;
-                }
-            } else {
-                document.getElementById("tel_info").innerHTML = "<font color=\"red\">您输入的手机号码有误,请重输</font>"
-                cflags[4]="0";
-                return false;
-            }
-        }
         //检查Email
         function checkemail() {
             var email=document.getElementById("regemail").value;
             var reg=new RegExp("^[\\w-]+(\\.[\\w-]+)*@[\\w-]+(\\.[\\w-]+)+$");
             if(reg.test(email)) {
                 document.getElementById("email_info").innerHTML = "";
-                cflags[5]="1";
+                cflags[3]="1";
             } else {
                 document.getElementById("email_info").innerHTML = "E-mail地址无效";
-                cflags[5]="0";
+                cflags[3]="0";
             }
         }
-        //检查地址;
-        function checkadd() {
-            if (document.getElementById("regaddr").value=="") {
-                address_info.innerHTML="地址为能为空";
-                cflags[6]="0";
+        //检查验证码;
+        function checkccode() {
+            if (document.getElementById("regcheckcode").value=="") {
+                document.getElementById("checkcode_info").innerHTML="验证码不能为空";
+                cflags[4]="0";
             } else {
-                address_info.innerHTML="";
-                cflags[6]="1";
+                document.getElementById("checkcode_info").innerHTML="";
+                cflags[4]="1";
             }
         }
         //检查协议;
@@ -177,11 +157,21 @@ request.setAttribute("tomcatExamplesUrl", "/examples/");
             <div class="bj_bai">
             <h3>欢迎注册</h3>
                 <form action="<%=request.getContextPath() %>/usersServlet?handle=2" name="signupForm" method="post">
-                    <input name="regusername" type="text" class="kuang_txt phone" placeholder="账号">
-                    <input name="regpassword" type="password" class="kuang_txt possword" placeholder="密码">
-                    <input name="regrepassword" type="password" class="kuang_txt possword" placeholder="重复密码">
-                    <input name="regemail" type="text" class="kuang_txt email" placeholder="邮箱">
-                    <input name="regcheckcode" type="text" class="kuang_txt yanzm" placeholder="验证码">
+                    <input name="regusername" type="text" class="kuang_txt phone" placeholder="账号" onblur="checkusername()">
+                    <div id="check_info"></div>
+
+                    <input name="regpassword" type="password" class="kuang_txt possword" placeholder="密码" onblur="checkpassword()">
+                    <div id="pwd_info"></div>
+
+                    <input name="regrepassword" type="password" class="kuang_txt possword" placeholder="重复密码" onblur="checkcpassword()">
+                    <div id="pwdrepeat_info"></div>
+
+                    <input name="regemail" type="text" class="kuang_txt email" placeholder="邮箱" onblur="checkemail()">
+                    <div id="email_info"></div>
+
+                    <input name="regcheckcode" type="text" class="kuang_txt yanzm" placeholder="验证码" onblur="checkccode()">
+                    <div id="checkcode_info"></div>
+
                     <div>
                         <div class="hui_kuang">
                             <img id="imagecode" src="<%=request.getContextPath() %>/imageServlet" width="100" height="30">

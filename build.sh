@@ -69,6 +69,7 @@ build)
 	cp DeltaPractice.war /home/pi/java/WebServ/apache-tomcat-8.0.24/webapps
 	;;
 update)
+	cd $BASE_HOME/src
 	cp c3p0-config.xml instance.properties $TARGET_DIR
 
 	cd $BASE_HOME/WebRoot
