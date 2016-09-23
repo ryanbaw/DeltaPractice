@@ -63,7 +63,7 @@ build)
 	cd $BASE_HOME/WebRoot
 	
 	echo $"Create war package ..."
-	jar cvf $BASE_HOME/DeltaPractice.war *.jsp css images js sql WEB-INF
+	jar cvf $BASE_HOME/DeltaPractice.war *.jsp *.html css images js sql WEB-INF
 
 	cd $BASE_HOME
 	cp DeltaPractice.war /home/pi/java/WebServ/apache-tomcat-8.0.24/webapps
@@ -74,7 +74,7 @@ update)
 	cd $BASE_HOME/WebRoot
 	
 	echo $"Create war package ..."
-	jar cvf $BASE_HOME/DeltaPractice.war *.jsp css images js sql WEB-INF
+	jar cvf $BASE_HOME/DeltaPractice.war *.jsp *.html css images js sql WEB-INF
 
 	cd $BASE_HOME
 	cp DeltaPractice.war /home/pi/java/WebServ/apache-tomcat-8.0.24/webapps

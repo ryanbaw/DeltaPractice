@@ -14,7 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 --%>
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page language="java" import="java.util.*,com.delta.practice.entity.Users" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
@@ -28,8 +28,20 @@ limitations under the License.
 
     <body>
     <div>
-    <a href="login.jsp">Login</a>
-    <a href="signup.jsp">Signup</a>
+    <%
+        Users user=new Users();
+        user=(Users)request.getSession().getAttribute("loginusername");
+        if(user==null){
+            out.print("<a href='login.jsp'>Login</a>");
+            out.print("<a href='signup.jsp'>Signup</a>");
+        }else{
+            out.print("<font size='3'>欢迎您  :"+user.getUsername()+"</font>");
+            out.print("&nbsp;&nbsp;");
+            out.print("<font size='3'><a href='usersServlet?handle=7'>退出</a></font>");
+            out.print("&nbsp;&nbsp;");
+            out.print("<a href='signup.jsp'>Signup</a>");
+        }
+    %>
     </div>
 
     <div id="QueryArea">

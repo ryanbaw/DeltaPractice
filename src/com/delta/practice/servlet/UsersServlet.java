@@ -66,21 +66,41 @@ public class UsersServlet extends BaseServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		response.setContentType("text/html;charset=UTF-8");
-		request.setCharacterEncoding("UTF-8");
-		PrintWriter out = response.getWriter();
-		String loginusername = request.getParameter("loginusername");
-		String loginpassword = request.getParameter("loginpassword");
-		try {
-			boolean flag = usersService.selectByNamePassword(loginusername, loginpassword);
-			if (flag) {
-				response.sendRedirect(request.getContextPath()+"/login_success.jsp");
-			} else {
-				response.sendRedirect(request.getContextPath()+"/login_failure.jsp");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		int handler = Integer.parseInt(request.getParameter("handle"));
+
+		switch (handler) {
+			case 1:
+				String loginusername = request.getParameter("loginusername");
+				String loginpassword = request.getParameter("loginpassword");
+
+				try {
+					boolean flag = usersService.selectByNamePassword(loginusername, loginpassword);
+					if (flag) {
+						Users user = usersService.selectByName(loginusername);
+						request.getSession().setAttribute("loginusername", user);
+						response.sendRedirect(request.getContextPath()+"/index.jsp");
+					} else {
+						response.sendRedirect(request.getContextPath()+"/login_failure.jsp");
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				break;
+			case 2:
+				String piccode = (String) request.getSession().getAttribute("piccode");
+				String checkcode = request.getParameter("checkcode");
+				checkcode = checkcode.toUpperCase();
+
+				if(checkcode.equals(piccode)){
+					response.sendRedirect(request.getContextPath()+"/sigin_success.jsp");
+				}
+				break;
+			case 7:
+				request.getSession().removeAttribute("loginusername");
+				response.sendRedirect(request.getContextPath()+"/index.jsp");
+				break;
 		}
+
 	}
 
 	/**

@@ -37,7 +37,7 @@ request.setAttribute("year", sdf.format(new java.util.Date()));
         <div class="zc">
             <div class="bj_bai">
                 <h3>登录</h3>
-                <form action="usersServlet" method="post">
+                <form action="<%=request.getContextPath() %>/usersServlet?handle=1" method="post">
                     <input name="loginusername" type="text" class="kuang_txt" placeholder="请输入手机号">
                     <input name="loginpassword" type="password" class="kuang_txt" placeholder="请输入密码">
                     <div>
@@ -49,10 +49,10 @@ request.setAttribute("year", sdf.format(new java.util.Date()));
             </div>
             <div class="bj_right">
                 <p>使用以下账号直接登录</p>
-                <a href="#" class="zhuce_qq">QQ注册</a>
-                <a href="#" class="zhuce_wb">微博注册</a>
-                <a href="#" class="zhuce_wx">微信注册</a>
-                <p>已有账号？<a href="#">立即登录</a></p>
+                <a href="#" class="zhuce_qq">QQ登录</a>
+                <a href="#" class="zhuce_wb">微博登录</a>
+                <a href="#" class="zhuce_wx">微信登录</a>
+                <p>没有账号？<a href="signup.jsp">立即注册</a></p>
             </div>
         </div>
     </div>
